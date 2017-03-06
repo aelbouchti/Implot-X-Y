@@ -28,11 +28,12 @@ Data
 
 # Classes
 
-class Motor:
-
-class Point:
-
-class Path:
+class Motor(object):
+    Pin=[]
+class Point(object):
+    X,Y=0,0
+class Path(object):
+    PTH=[]
     
 
 
