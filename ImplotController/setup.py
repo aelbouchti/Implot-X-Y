@@ -15,7 +15,7 @@ setup(
     description='Driver for 2D implot',
     long_description=readme,
     author='Mohammed-Amine Hilaly',
-    author_email='Impcreativity@gmail.com',
+    author_email='hilalyamine@gmail.com',
     url='',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
