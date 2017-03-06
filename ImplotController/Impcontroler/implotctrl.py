@@ -38,33 +38,34 @@ class Path(object):
 
 # Functions
 
-def _init_():
+
     
-def MoveX(Numberofsteps,sens):
+def MoveX():
+    print("x moving")
 
-def MoveY(Numberofsteps,sens):
+#def MoveY():
 
-def MoveStepX(sens):
+#def MoveStepX():
 
-def MoveStepY(sens):
+#def MoveStepY():
 
-def DrawPath():
+#def DrawPath():
 
-def Bresenham(Form,Precision):
+#def Bresenham():
     
-def MTP(Point):
+#def MTP():
     #Move to point
 
 
-def GoHome():
+#def GoHome():
     #go to initial point
 
-def printAlpha(alphabet):
+#def printAlpha():
     #Print alphabet
 
-def printText(text):
+#def printText():
 
-def estimtime():
+#def estimtime():
     
-def main():
+#def main():
     
