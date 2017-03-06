@@ -18,12 +18,12 @@ from time import *
 # Constants
 
 
-MotorX,MotorY
-StepX,StepY
+#MotorX,MotorY
+#StepX,StepY
 Xmax,Ymax=20,40
 
-Grid
-Data
+#Grid
+#Data
 
 # Classes
 
