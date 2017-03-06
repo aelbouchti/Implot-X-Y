@@ -6,13 +6,9 @@
 _To Do List :
 
 - Hardware
-
 3D hand drawing of the Implot pieces
-
 3D modeling of every pieces of the machine
-
 3D printing
-
 Metal axes ( Italy ? )
 
 - Software
