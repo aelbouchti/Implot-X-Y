@@ -10,13 +10,13 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='sample',
+    name='implotcontroler',
     version='0.1.0',
-    description='Sample package for Python-Guide.org',
+    description='Driver for 2D implot',
     long_description=readme,
     author='Mohammed-Amine Hilaly',
     author_email='Impcreativity@gmail.com',
-    url='https://github.com/kennethreitz/samplemod',
+    url='',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
 )
