@@ -20,9 +20,8 @@ from GPIO import *
 
 MotorX,MotorY
 StepX,StepY
-Xmax,Ymax
-NUL=0
-ERROR
+Xmax,Ymax=20,40
+
 Grid
 Data
 
