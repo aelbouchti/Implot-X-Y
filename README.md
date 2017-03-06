@@ -24,8 +24,11 @@ Power adjusting
 _Usefull Links : 
 
 https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/
+
 https://circuitdigest.com/microcontroller-projects/controlling-stepper-motor-with-raspberry-pi
+
 https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
+
 https://www.youtube.com/watch?v=ScB0qBL8Z6E
 
 
