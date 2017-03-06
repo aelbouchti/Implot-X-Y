@@ -27,13 +27,16 @@ Xmax,Ymax=20,40
 
 # Classes
 
-class Motor(object):
-    Pin=[]
-class Point(object):
-    X,Y=0,0
-class Path(object):
-    PTH=[]
-    
+class Song(object):
+
+    def __init__(self, lyrics):
+        self.lyrics = lyrics
+
+    def sing_me_a_song(self):
+        for line in self.lyrics:
+            print line
+
+
 
 
 # Functions
