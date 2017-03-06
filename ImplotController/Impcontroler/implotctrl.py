@@ -12,7 +12,7 @@
 
 from math import *
 from time import *
-from GPIO import *
+#from GPIO import *
 
 
 # Constants
