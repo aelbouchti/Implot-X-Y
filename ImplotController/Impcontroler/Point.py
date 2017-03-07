@@ -46,7 +46,7 @@ class Point(object):
         
 #The abstract modelisation of an infinit number of points between 2 non-same points
 class Line():
-	A,B=P(),P()
+	A,B=Point(),Point()
 	def __init__(self,a,b):
 		self.A=a
 		self.B=b
@@ -74,7 +74,8 @@ def generate_points_table(Xmax,Ymax,step):
 			tableL+=[P]
 		finaltable+=[tableL]
 		tableL=0
-	return finaltable
+	#return table and number of points on X and Y axe
+	return finaltable,len(finaltable[0],len(finaltable))
 
 
 #def MoveY():
