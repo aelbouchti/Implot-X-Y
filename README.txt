@@ -22,6 +22,7 @@ Power adjusting
 
 _Usefull Links : 
 
+http://www.raspberrypi-spy.co.uk/2012/07/stepper-motor-control-in-python/
 https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/
 https://circuitdigest.com/microcontroller-projects/controlling-stepper-motor-with-raspberry-pi
 https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
