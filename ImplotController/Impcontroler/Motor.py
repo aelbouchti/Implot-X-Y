@@ -17,24 +17,24 @@ except RuntimeError:
 GPIO.setmode(GPIO.BCM)
 
 class Motor(Object):
-  Name=''
-  Type=''
-  Nbr_steps=0
-  PINS=[]
-  
-  def __init__(self,Name,Type,Nbr_steps,PINS):
-    self.Name=Name
-    self.Type=Type
-    self.Nbr_steps=Nbr_steps
-    self.PINS=PINS
+    Name=''
+    Type=''
+    Nbr_steps=0
+    PINS=[]
+    def __init__(self,Name,Type,Nbr_steps,PINS):
+            self.Name=Name
+            self.Type=Type
+            self.Nbr_steps=Nbr_steps
+            self.PINS=PINS
     
-  def setPINS(self,PINS):
-    self.PINS=PINS
+    def setPINS(self,PINS):
+            self.PINS=PINS
     
-  def StartMotor():
-    for i in PINS:
-      GPIO.setup(i,GPIO.IN)
+    def StartMotor():
+            for pin in PINS:
+                    print "Setup pins"
+                    GPIO.setup(pin,GPIO.OUT)
+                    GPIO.output(pin, False)
     
     
-  
-          
+
