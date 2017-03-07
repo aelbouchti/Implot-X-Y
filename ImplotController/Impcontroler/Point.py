@@ -22,7 +22,7 @@ class P(object):
     	def setXY(self,x,y):
         	self.X=x
         	self.Y=y
-    	def 2tuple(self,a):
+    	def tupl(self,a):
         	self.X=P[0]
         	self.Y=P[1]
     	def AVX(self,value):
