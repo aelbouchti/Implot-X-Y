@@ -13,34 +13,32 @@ from time import *
 Xmax,Ymax=100,100
 
 
-
 class P(object):
-        dim=0
+	dim=0
         X,Y=0,0
-    def __init__(self):
-        self.X=0
-        self.Y=0
-    def setXY(self,x,y):
-        self.X=x
-        self.Y=y
-    def tuple(self,a):
-        self.X=P[0]
-        self.Y=P[1]
-    def AVX(self,value):
-        self.X+=value
-    def AVY(self,value):
-        self.Y+=value
-    def clonePoint(self,Point):
-        self.X=Point.X
-        self.Y=Point.Y
-    def returnXY(self):
-        return self.X,self.Y
-    def X(self):
-        return self.X
-    def Y(self):
-        return self.Y
+	def __init__(self):
+        	self.X=0
+        	self.Y=0
+    	def setXY(self,x,y):
+        	self.X=x
+        	self.Y=y
+    	def tuple(self,a):
+        	self.X=P[0]
+        	self.Y=P[1]
+    	def AVX(self,value):
+        	self.X+=value
+    	def AVY(self,value):
+        	self.Y+=value
+    	def clonePoint(self,Point):
+        	self.X=Point.X
+        	self.Y=Point.Y
+    	def returnXY(self):
+        	return self.X,self.Y
+    	def X(self):
+        	return self.X
+    	def Y(self):
+        	return self.Y
         
-
 class Line():
 	A,B=P(),P()
 	def __init__(self,a,b):
@@ -54,17 +52,14 @@ class Line():
 		self.A=a
 	def setB(self,b):
 		self.B=b
-    
-# Functions
 
 
-    
-    
-    
-    
 def MoveX():
-    print("x moving")
-
+    	print("x moving")
+	
+LEN=lambda A,B : sqrt( (A.X-B.X)**2 + (A.Y-B.Y)**2)
+def GeometriqueDistance(A,B):
+	return LEN(A,B)
 #def MoveY():
 
 #def MoveStepX():
