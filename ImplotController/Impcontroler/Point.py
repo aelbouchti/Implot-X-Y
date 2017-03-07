@@ -6,13 +6,13 @@
 # M-A Hilaly
 
 
-# ImplotControler is the 2D-implot main driver
+# Point class and functions
 
-#
+
 
 from math import *
 from time import *
-#from GPIO import *
+
 
 
 # Constants
@@ -25,21 +25,34 @@ Xmax,Ymax=20,40
 #Grid
 #Data
 
-# Classes
 
-class Point(object):
-    X,Y=0,0
+class P(object):
+    dim=0
     
-    def __init__(self):
-        self.X=0
-        self.Y=0
+    def __init__(self,X,Y):
+        self.X=X
+        self.Y=Y
+        
+    def setXY(self,a,b):
+        self.X=a
+        self.Y=b
     
-    def addX(self,value):
+    def setX(self,value):
         self.X=self.X+value
-    def addY(self,value):
+        
+    def setY(self,value):
         self.Y+=value
+        
+    def setPoint(self,Point):
+        self.X=Point.X
+        self.Y=Point.Y
+        
+    def returnXY(self):
+        return self.X,self.Y
+        
 
-
+class Line():
+    pass
 # Functions
 
 
