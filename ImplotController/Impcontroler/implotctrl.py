@@ -27,16 +27,17 @@ Xmax,Ymax=20,40
 
 # Classes
 
-class Song(object):
-
-    def __init__(self, lyrics):
-        self.lyrics = lyrics
-
-    def sing_me_a_song(self):
-        for line in self.lyrics:
-            print line
-
-
+class Point(object):
+    X,Y=0,0
+    
+    def __init__(self):
+        self.X=0
+        self.Y=0
+    
+    def addX(self,value):
+        self.X=self.X+value
+    def addY(self,value):
+        self.Y+=value
 
 
 # Functions
