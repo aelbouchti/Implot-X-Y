@@ -17,11 +17,9 @@ Xmax,Ymax=100,100
 
 class Point(object):
 	#Initial X,Y
-        X,Y=0,0
-	#Creating a Point class dosent need arguments . Every Point get X=0 Y=0 at the creation
-	def __init__(self):
-        	self.X=0
-        	self.Y=0
+	def __init__(self,a,b):
+        	self.X=a
+        	self.Y=b
 	#Setting values
     	def setXY(self,x,y):
         	self.X=x
@@ -46,7 +44,6 @@ class Point(object):
         
 #The abstract modelisation of an infinit number of points between 2 non-same points
 class Line():
-	A,B=Point(),Point()
 	def __init__(self,a,b):
 		self.A=a
 		self.B=b
@@ -65,7 +62,7 @@ def GeometriqueDistance(A,B):
 	return Len(A,B)
 
 def generate_points_table(Xmax,Ymax,step):
-	P=Point()
+	P=Point(0,0)
 	tableL=[]
 	finaltable=[]
 	for i in range(0,Xmax+step,step):
