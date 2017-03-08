@@ -7,6 +7,6 @@ from math import *
 
 
 
-a=generate_table()
+a=generate_points_table()
 
 
