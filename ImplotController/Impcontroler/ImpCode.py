@@ -5,8 +5,9 @@ from Impcontroler import Motor
 from time import *
 from math import *
 
+Xmax,Ymax
 
 
-a=generate_points_table()
+s,m,n=generate_points_table(Xmax,Ymax,Motorstep)
 
 
