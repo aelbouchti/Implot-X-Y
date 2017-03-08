@@ -55,6 +55,10 @@ class Line():
 		self.A=a
 	def setB(self,b):
 		self.B=b
+		
+class Path(Line):
+	def __init__(self,a,b):
+		a=Line.__init__(0,0)
 
 	
 Len=lambda A,B : sqrt( (A.X-B.X)**2 + (A.Y-B.Y)**2)
@@ -73,6 +77,8 @@ def generate_points_table(Xmax,Ymax,step):
 		tableL=0
 	#return table and number of points on X and Y axe
 	return finaltable,len(finaltable[0],len(finaltable))
+
+
 
 
 #def MoveY():
