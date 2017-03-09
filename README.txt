@@ -28,5 +28,7 @@ https://circuitdigest.com/microcontroller-projects/controlling-stepper-motor-wit
 https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
 https://www.youtube.com/watch?v=ScB0qBL8Z6E
 
+SPECIAL NEWBIES CLASSES PYTHON ONE LESSON ONE TRICK ONE EVERYTHING JUST READ IT
+http://www.jesshamrick.com/2011/05/18/an-introduction-to-classes-and-inheritance-in-python/
 
 
