@@ -122,8 +122,9 @@ def bresenham_line(start, end):
 	cord=Point(0,0)
     	for x in range(x1, x2 + 1):
         	coord = (y, x) if is_steep else (x, y)
-		cord.X=coord
-        	points.append(coord)
+		cord.X=coord[0]
+		cord.Y=coord[1]
+        	points.append(cord)
         	error -= abs(dy)
         	if error < 0:
             		y += ystep
