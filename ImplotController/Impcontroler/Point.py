@@ -25,8 +25,8 @@ class Point(object):
 	#Setting values
     	def setXY(self,x,y):
         	self.X=x
-        	self.Y=y
-    	def AVX(self,value):
+		self.Y=y
+	def AVX(self,value):
         	self.X+=value
 	def tupl(self,a):
         	self.X=P[0]
@@ -68,6 +68,7 @@ class Path():
 		self.pathdirections=[]
 		self.operativelines['.PATH']
 		self.L=len(pathpoints)
+		self.code=''
 		#pathpoints and pathdirections are 2 distinct sets with n and n - 1 elements
 		#example pathpoints=[(0,5),(1,3),(5,6),(10,0)] 
 		#pathdirections take the value of A in the simple equation AX+B=Y
@@ -112,9 +113,10 @@ class Path():
 			a,b=self.pathpoints[i].returnXY()
 			code+='.'+str(self.operativelines[i])
 		     	code+='.'+str(a)+'.'+str(b)
+		self.code=code
 
 			
-	def decodeDATA(self,code):
+	def decodeDATA(self,code=self.code):
 		# 'PATH.0.0.T.2.0.F.0.0.T.0.2.F.0.0.T.0.-2.F.0.0.T.-2.0.F.0.0'
 		pp=[]
 		ol=[]
