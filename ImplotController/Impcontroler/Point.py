@@ -60,11 +60,59 @@ class Line():
 	def setB(self,b):
 		self.B=b
 		
+		
 class Path(Line):
 	def __init__(self,a,b):
-		a=Line.__init__(0,0)
+		self.Line.__init__(a,b)
+		self.pathpoints=[a,b]
+		self.pathdirections=[]
+		self.L=len(pathpoints)
+		#pathpoints and pathdirections are 2 distinct sets with n and n - 1 elements
+		#example pathpoints=[(0,5),(1,3),(5,6),(10,0)] 
+		#pathdirections take the value of A in the simple equation AX+B=Y
+		#pathdirections=['-1/2','-4/3','5/6'] as strings not fractions
+		
+	def ACP(self,x,i):
+		#addcheckpoint : insert Point value in index i
+		if i!=self.L : self.pathpoints.insert(i,x)
+		elif i==self.L : self.pathpoints+=[x]
+			
+	def setpathdirections(self):
+		#after adding Points to pathpoints you can reset the drections list
+		#simple solving for line equations ax+b=y
+		#see derivate and factorise
+		self.pathdirections=[]
+		for i in range(0,len(self.pathpoints)-1,1):
+			a,b,m,n=derivate(self.pathpoints[i],self.pathpoints[i+1])
+			if m==n:
+				a,b=factorise(a,b)
+				self.pathdirections+=[str(a)+'/'+str(b)]
+			else :
+				a,b=factorise(abs(a),abs(b))
+				self.pathdirections+=[str(a)+'/'+str(b)]
+	
+				
+			
+		
+	
+	
+def derivate(p,q):
+	a=p.X-q.X
+	b=p.Y-q.Y
+	return a,b,a>0,b>0
 
 
+# Euclide Algorithme for biggest commun divisor
+def pgcd(a,b) :  
+   	while a%b != 0 : 
+      	a, b = b, a%b 
+   	return b
+
+def fractorise(a,b):
+	if pgcd(a,b)==1:
+		return a,b
+	return factorise(a/pgcd(a,b),b/pgcd(a,b))
+	
 		
 Len=lambda A,B : sqrt( (A.X-B.X)**2 + (A.Y-B.Y)**2)
 def GeometriqueDistance(A,B):
