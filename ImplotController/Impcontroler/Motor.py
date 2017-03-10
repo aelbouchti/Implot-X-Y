@@ -107,6 +107,8 @@ class CURSOR(Object):
         self.Position=Point(0,0)
         self.PullPin=15
         self.Home=False
+        self.HomeKnown=False
+        self.PathExec=Path()
         
     def setPins(self,p1,p2):
         self.XCommand.setPins(p1)
@@ -125,7 +127,12 @@ class CURSOR(Object):
         self.Position=Point(0,0)
         self.Home=True
     
+    def GetPathData(self,DATA):
+        self.PathExec.decodeDATA(DATA)
+        
     def MoveCursorTo(self,point):
+        if self.HomeKnown=False:
+            self.HomeCursor()
         
         self.Home=False
         
