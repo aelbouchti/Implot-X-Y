@@ -77,4 +77,7 @@ class COMMANDER(Motor,Point):
     
     def __init__():
         super(COMMANDER, self).__init__()
+        
+        
+        
     
