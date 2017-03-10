@@ -78,17 +78,58 @@ class COMMANDER(Motor,Path):
     def __init__(self,name):
         super(COMMANDER, self).__init__()
         self.name=name
-        self.CLICK=False
+        self.HOME=False
+        self.SENSORPIN=0
+        self.POS=0
         
-    def setpins(self,pins):
+        
+    def setPins(self,pins):
         self.Motor.pins=pins
+    
+    def SSP(self,s):
+        self.SENSORPIN=s
         
-    def CLICK(self):
-        self.CLICK=True
+    def setHOME(self):
+        #
+        #
+        self.HOME=True
+    
+    def MoveToPos(self,pos):
         
-    def traceline(self):
         
+    
+
+class CURSOR(Object):
+    
+    def __init__(self):
+        self.XCommand=COMMANDER('X')
+        self.YCommand=COMMANDER('Y')
+        self.Position=Point(0,0)
+        self.PullPin=15
+        self.Home=False
         
+    def setPins(self,p1,p2):
+        self.XCommand.setPins(p1)
+        self.YCommand.setPins(p2)
+    
+    def SensorPins(self,s1,s2):
+        self.XCommand.SSP(s1)
+        self.YCommand.SSP(s2)
+        
+    def CheckHome(self):
+        return self.Home
+    
+    def HomeCursor(self):
+        self.XCommand.setHOME()
+        self.YCommand.setHOME()
+        self.Position=Point(0,0)
+        self.Home=True
+    
+    def MoveCursorTo(self,point):
+        
+        self.Home=False
+        
+    def Click(self):
         
         
     
