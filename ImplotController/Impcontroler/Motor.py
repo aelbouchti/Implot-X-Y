@@ -130,13 +130,31 @@ class CURSOR(Object):
     def GetPathData(self,DATA):
         self.PathExec.decodeDATA(DATA)
         
+    def ExecuteData(self):
+        self.MoveCursorTo(self.PathExec.pathpoints[0])
+        OL=self.PathExec.operativelines
+        PP=self.PathExec.pathpoints
+        
+        for i in self.PathExec.L:
+            if OL[i]==T:
+                self.Click()
+                self.MoveCursorTo(PP[i])
+            else:
+                self.Click(False)
+                self.MoveCursorTo(PP[i])
+                
+            
+        
     def MoveCursorTo(self,point):
         if self.HomeKnown=False:
             self.HomeCursor()
         
         self.Home=False
         
-    def Click(self):
-        
-        
+    def Click(self,operation=True):
+        if operation==True:
+            #
+        else:
+            #
+    
     
