@@ -19,7 +19,7 @@ Xmax,Ymax=100,100
 #Point Class : Classic mathematical modelisation of a point in 2D space 
 class Point(object):
 	#Initial X,Y
-	def __init__(self,a,b):
+	def __init__(self,a=0,b=0):
         	self.X=a
         	self.Y=b
 	#Setting values
@@ -49,8 +49,8 @@ class Point(object):
 #The abstract modelisation of an infinit number of points between 2 non-same points
 class Line():
 	def __init__(self,a,b):
-		self.A=a
-		self.B=b
+		self.A=Point(a.X,a.Y)	
+		self.B=Point(b.X,b.Y)
 	def GeoLen(self):
 		return sqrt( (self.A.X-self.B.X)**2 + (self.A.Y-self.B.Y)**2)
 	def PixLen(self):
