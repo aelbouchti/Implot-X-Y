@@ -16,7 +16,7 @@ from time import *
 Xmax,Ymax=100,100
 
 
-#Point Class : Classic mathematical modelisation of a point in 2D space d
+#Point Class : Classic mathematical modelisation of a point in 2D space dd
 class Point(object):
 	#Initial X,Y
 	def __init__(self,a=0,b=0):
