@@ -73,10 +73,21 @@ class Motor(object):
 
 
         
-class COMMANDER(Motor,Point):
+class COMMANDER(Motor,Path):
     
-    def __init__():
+    def __init__(self,name):
         super(COMMANDER, self).__init__()
+        self.name=name
+        self.CLICK=False
+        
+    def setpins(self,pins):
+        self.Motor.pins=pins
+        
+    def CLICK(self):
+        self.CLICK=True
+        
+    def traceline(self):
+        
         
         
         
