@@ -3,8 +3,9 @@
 # ImplotControler 1.0
 
 
-# Motors class
+
 import sys
+from time import *
 from math import *
 from time import *
 try:
@@ -12,10 +13,8 @@ try:
 except RuntimeError:
     print("Error importing RPi.GPIO . Try sudo commands")
 
-
-import RPi.GPIO as GPIO
 from Implotcontroler import Point
-from time import *
+
 
 class Motor(object):
     
