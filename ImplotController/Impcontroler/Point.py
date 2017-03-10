@@ -214,6 +214,11 @@ def bresenham_line(start, end):
         	points.reverse()
     		return points
 
+	
+def angletodistance():
+	
+def distancetoangle():
+	
 
 #def MoveY():
 
