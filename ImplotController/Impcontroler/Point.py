@@ -61,21 +61,36 @@ class Line():
 		self.B=b
 		
 		
-class Path(Line):
-	def __init__(self,a,b):
-		self.Line.__init__(a,b)
-		self.pathpoints=[a,b]
+class Path():
+	
+	def __init__(self,a=Point(0,0)):
+		self.pathpoints=[a]
 		self.pathdirections=[]
+		self.operativelines['.PATH']
 		self.L=len(pathpoints)
 		#pathpoints and pathdirections are 2 distinct sets with n and n - 1 elements
 		#example pathpoints=[(0,5),(1,3),(5,6),(10,0)] 
 		#pathdirections take the value of A in the simple equation AX+B=Y
 		#pathdirections=['-1/2','-4/3','5/6'] as strings not fractions
+		     
 		
-	def ACP(self,x,i):
+	def ACP(self,x,i=self.L):
 		#addcheckpoint : insert Point value in index i
+		     
+		if type(i)=='list'
+		     self.pathpoints+=i
 		if i!=self.L : self.pathpoints.insert(i,x)
 		elif i==self.L : self.pathpoints+=[x]
+
+			
+	def resetLists(self):
+		self.pathpoints=[]
+		self.pathdirections=[]
+		self.operativelines[]
+		     
+	def AOL(self,OLTab): #ADD OPERATIVE LINES
+		self.operativelines=OLTab
+		     
 			
 	def setpathdirections(self):
 		#after adding Points to pathpoints you can reset the drections list
@@ -90,7 +105,30 @@ class Path(Line):
 			else :
 				a,b=factorise(abs(a),abs(b))
 				self.pathdirections+=[str(a)+'/'+str(b)]
-	
+
+	def codeDATA(self):
+		code=''
+		for i in range(0,self.L):
+			a,b=self.pathpoints[i].returnXY()
+			code+='.'+str(self.operativelines[i])
+		     	code+='.'+str(a)+'.'+str(b)
+
+			
+	def decodeDATA(self,code):
+		# 'PATH.0.0.T.2.0.F.0.0.T.0.2.F.0.0.T.0.-2.F.0.0.T.-2.0.F.0.0'
+		pp=[]
+		ol=[]
+		a=Point()
+		recode=code.split(".")
+		counter=0
+		for i in range(0,len(recode),3)
+		     	a.setXY(recode[i],recode[i+1])
+		     	pp+=[a]
+		     	ol+=[recode[i+2]]
+
+		self.pathpoints=pp
+		self.operativelines=ol
+		
 				
 			
 		
