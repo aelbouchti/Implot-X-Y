@@ -109,6 +109,8 @@ class CURSOR(Object):
         self.Home=False
         self.HomeKnown=False
         self.PathExec=Path()
+        self.GRID=[]
+        self.GRIDinfo=[0,0,0,0]
         
     def setPins(self,p1,p2):
         self.XCommand.setPins(p1)
@@ -117,6 +119,20 @@ class CURSOR(Object):
     def SensorPins(self,s1,s2):
         self.XCommand.SSP(s1)
         self.YCommand.SSP(s2)
+        
+    def setGRID(self,xmax=100,ymax=100,stepx=1,stepy=1):
+    
+	    P=Point(0,0)
+	    tableL=[]
+	    finaltable=[]
+	    for i in range(0,Xmax+stepx,stepx):
+		    for j in range(0,Ymax+stepy,stepy):
+			    P=P.setXY(i,j)
+			    tableL+=[P]
+		    finaltable+=[tableL]
+		    tableL=0
+	    #return table and number of points on X and Y axe
+	    self.GRID,self.GRIDinfo=finaltable,[xmax,ymax,stepx,stepy]
         
     def CheckHome(self):
         return self.Home
