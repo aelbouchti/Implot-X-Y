@@ -105,7 +105,7 @@ class Path():
 				self.pathdirections+=[str(a)+'/'+str(b)]
 			else :
 				a,b=factorise(abs(a),abs(b))
-				self.pathdirections+=[str(a)+'/'+str(b)]
+				self.pathdirections+=['-'+str(a)+'/'+str(b)]
 
 	def codeDATA(self):
 		code=''
@@ -216,6 +216,11 @@ def bresenham_line(start, end):
         	points.reverse()
     		return points
 
+
+decision = lambda a : a>0
+def decision(a) : return a>0
+	
+	
 	
 def angletodistance():
 	
