@@ -184,6 +184,12 @@ class Path():
 		self.pathpoints=pp
 		self.operativelines=ol
 		
+	def config(self):
+		self.optimise()
+		self.L=len(pathpoints)
+		
+		
+		
 				
 			
 		
