@@ -221,7 +221,7 @@ def wichsens(p,q):
 def derivate2(p,q):
 	return abs(p.X-q.X),abs(p.Y-q.Y)
 
-def derivateC(p,q):
+def derivateC(q,p):
 	return (p.X-q.X),(p.Y-q.Y)
 
 
