@@ -65,7 +65,6 @@ class Path():
 	
 	def __init__(self,a=Point(0,0)):
 		self.pathpoints=[a]
-		self.pathdirections=[]
 		self.operativelines['.PATH']
 		self.L=len(pathpoints)
 		self.code=''
@@ -73,7 +72,7 @@ class Path():
 		#example pathpoints=[(0,5),(1,3),(5,6),(10,0)] 
 		#pathdirections take the value of A in the simple equation AX+B=Y
 		#pathdirections=['-1/2','-4/3','5/6'] as strings not fractions
-		     
+		'PATH.0.0.F.0.-2.T.
 		
 	def ACP(self,x,i=self.L):
 		#addcheckpoint : insert Point value in index i
@@ -83,29 +82,62 @@ class Path():
 		if i!=self.L : self.pathpoints.insert(i,x)
 		elif i==self.L : self.pathpoints+=[x]
 
+	
+	def bresenhampath(self,a,b):
+		x1, y1 = start.returnXY()
+		x2, y2 = end.returnXY()
+		dx = x2 - x1
+		dy = y2 - y1
+    		# Determine how steep the line is
+    		is_steep = abs(dy) > abs(dx)
+    		# Rotate line
+    		if is_steep:
+    		    	x1, y1 = y1, x1
+    	 	   	x2, y2 = y2, x2	
+		# Swap start and end points if necessary and store swap state
+    		swapped = False
+    		if x1 > x2:
+    	    		x1, x2 = x2, x1
+        		y1, y2 = y2, y1
+        		swapped = True
+    		# Recalculate differentials
+    		dx = x2 - x1
+    		dy = y2 - y1
+    		# Calculate error
+    		error = int(dx / 2.0)
+    		ystep = 1 if y1 < y2 else -1
+    		# Iterate over bounding box generating points between start and end
+    		y = y1
+    		points = []
+		cord=Point(0,0)
+    		for x in range(x1, x2 + 1):
+        		coord = (y, x) if is_steep else (x, y)
+			cord.X=coord[0]
+			cord.Y=coord[1]
+        		points.append(cord)
+        		error -= abs(dy)
+        		if error < 0:
+            			y += ystep
+            			error += dx
+    		# Reverse the list if the coordinates were swapped
+    		if swapped:
+        		points.reverse()
+    			self.pathpoints=points
 			
+	def optimise(self):
+		
+		
+		
 	def resetLists(self):
 		self.pathpoints=[]
 		self.pathdirections=[]
 		self.operativelines[]
 		     
+			
+	
 	def AOL(self,OLTab): #ADD OPERATIVE LINES
 		self.operativelines=OLTab
 		     
-			
-	def setpathdirections(self):
-		#after adding Points to pathpoints you can reset the drections list
-		#simple solving for line equations ax+b=y
-		#see derivate and factorise
-		self.pathdirections=[]
-		for i in range(0,len(self.pathpoints)-1,1):
-			a,b,m,n=derivate(self.pathpoints[i],self.pathpoints[i+1])
-			if m==n:
-				a,b=factorise(a,b)
-				self.pathdirections+=[str(a)+'/'+str(b)]
-			else :
-				a,b=factorise(abs(a),abs(b))
-				self.pathdirections+=['-'+str(a)+'/'+str(b)]
 
 	def codeDATA(self):
 		code=''
@@ -135,11 +167,24 @@ class Path():
 			
 		
 	
+
 	
+def givefunction(A,B):
+	dx=A.x-B.x
+	dy=A.y-B.y
+	return dy , -dx , dx*A.y -dy*A.x
+
+def disT(A,B,C):
+	a,b,c=givefunction(A,B)
+	return abs(C.x*a+C.y*b+c)//(sqrt(a*a+b*b))
+
 def derivate(p,q):
 	a=p.X-q.X
 	b=p.Y-q.Y
 	return a,b,a>0,b>0
+
+def derivate2(p,q):
+	return abs(p.X-q.X),abs(p.Y-q.Y)
 
 
 # Euclide Algorithme for biggest commun divisor
@@ -220,7 +265,9 @@ def bresenham_line(start, end):
 decision = lambda a : a>0
 def decision(a) : return a>0
 	
-	
+def decodedirections(code):
+	a=code.split('/')
+	return int(a[0]),int(a[1])
 	
 def angletodistance():
 	
