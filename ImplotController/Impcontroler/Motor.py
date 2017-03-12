@@ -34,17 +34,16 @@ class Motor(object):
             (1, 0, 0, 1)]
         self.zero = [0,0,0,0]
         self.steps = 0
-        self.movestep(self.LL[0])
         self.release()
 
     def infopls(self):
-        return 'Motor at ', self.PINS, self.steps, self.actual_state
+        return 'Motor at ', self.PINS, self.steps
 
     def abord(self, type, value, tb):
         GPIO.cleanup(self.PINS)
 
     def movesteps(self, value):
-        steps = value - self._steps
+        steps = value - self.steps
         self.move(steps)
 
     def move(self, steps):
@@ -66,21 +65,22 @@ class Motor(object):
     def reset(self):
         self.steps = 0
 
-    def _set_step(self, state):
+    def movestep(self, state):
         #HIGH OR LOW
         self.stat = state
         GPIO.output(self.PINS, state)
+		
 
 
         
-class COMMANDER(Motor,Path):
+class COMMANDER(Motor):
     
     def __init__(self,name):
-        super(COMMANDER, self).__init__()
         self.name=name
         self.HOME=False
         self.SENSORPIN=0
         self.POS=0
+		self.STEP=0
         
         
     def setPins(self,pins):
@@ -93,15 +93,20 @@ class COMMANDER(Motor,Path):
         #
         #
         self.HOME=True
-    
-    def MoveToPos(self,pos):
-        
+    def definstep(self,step):
+		self.Motor.movesteps(step)
+		self.STEP=step
+	
+    def MoveOneStep(self,a): # -1 for backward
+        self.Motor.movesteps(self.STEP*a)
+		self.POS+=a
         
     
 
 class CURSOR(Object):
     
     def __init__(self):
+		
         self.XCommand=COMMANDER('X')
         self.YCommand=COMMANDER('Y')
         self.Position=Point(0,0)
@@ -109,7 +114,7 @@ class CURSOR(Object):
         self.Home=False
         self.HomeKnown=False
         self.PathExec=Path()
-        self.GRID=[]
+        self.Grid=[]
         self.GRIDinfo=[0,0,0,0]
         
     def setPins(self,p1,p2):
@@ -120,20 +125,6 @@ class CURSOR(Object):
         self.XCommand.SSP(s1)
         self.YCommand.SSP(s2)
         
-    def setGRID(self,xmax=100,ymax=100,stepx=1,stepy=1):
-    
-	    P=Point(0,0)
-	    tableL=[]
-	    finaltable=[]
-	    for i in range(0,Xmax+stepx,stepx):
-		    for j in range(0,Ymax+stepy,stepy):
-			    P=P.setXY(i,j)
-			    tableL+=[P]
-		    finaltable+=[tableL]
-		    tableL=0
-	    #return table and number of points on X and Y axe
-	    self.GRID,self.GRIDinfo=finaltable,[xmax,ymax,stepx,stepy]
-        
     def CheckHome(self):
         return self.Home
     
@@ -142,10 +133,10 @@ class CURSOR(Object):
         self.YCommand.setHOME()
         self.Position=Point(0,0)
         self.Home=True
-    
+	
     def GetPathData(self,DATA):
         self.PathExec.decodeDATA(DATA)
-        
+    	
     def ExecuteData(self):
         self.MoveCursorTo(self.PathExec.pathpoints[0])
         OL=self.PathExec.operativelines
@@ -164,7 +155,19 @@ class CURSOR(Object):
     def MoveCursorTo(self,point):
         if self.HomeKnown=False:
             self.HomeCursor()
-        
+		self.PathExec.bresenhampath(self.Position,point)
+		self.optimise()
+		while self.Position!=point:
+			for i in self.PathExec.pathpoints:
+				m,n=derivateC(self.Position,i)
+				if m==0 : 
+					self.YCommand.MoveOneStep(n)
+					self.Position.AVY(n)
+				else:
+					self.XCommand.MoveOneStep(m)
+					self.Position.AVX(m)
+				self.Grid.insert(self.Position)
+				
         self.Home=False
         
     def Click(self,operation=True):
