@@ -26,6 +26,10 @@ class Point(object):
     	def setXY(self,x,y):
         	self.X=x
 		self.Y=y
+	def setX(self,x):
+		self.X=x
+	def setY(self,y):
+		self.Y=y
 	def AVX(self,value):
         	self.X+=value
 	def tupl(self,a):
@@ -125,9 +129,26 @@ class Path():
     			self.pathpoints=points
 			
 	def optimise(self):
-		
-		
-		
+		A=0
+		a,b,m,n=0,0,0,0
+		k=self.pathpoints[0]
+		j=self.pathpoints[L]
+		possibleA,possibleB=Point(),Point()
+		for i in L-1:
+			a=self.pathpoints[i]
+			b=self.pathpoints[i+1]
+			if Len==1:
+				continue
+			else:
+				m,n=wichsens(a,b)
+				possibleA=a.AVX(m)
+				possibleB=a.AVY(n)
+				if disT(k,j,possibleA)>disT(k,j,possibleB):
+					self.pathpoints.insert(i+1,possibleB)
+				self.pathpoints.insert(i+1,possibleA)
+				
+				
+
 	def resetLists(self):
 		self.pathpoints=[]
 		self.pathdirections=[]
@@ -182,6 +203,20 @@ def derivate(p,q):
 	a=p.X-q.X
 	b=p.Y-q.Y
 	return a,b,a>0,b>0
+
+def wichsens(p,q):
+	a,b,c,d=derivate(p,q)
+	if c==d:
+		if a>0:
+			return 1,1
+		if a<0:
+			return -1,-1
+	else:
+		if a>0:
+			return 1,-1
+		if a<0:
+			return -1,1
+		
 
 def derivate2(p,q):
 	return abs(p.X-q.X),abs(p.Y-q.Y)
