@@ -87,7 +87,7 @@ class Path():
 		elif i==self.L : self.pathpoints+=[x]
 
 	
-	def bresenhampath(self,a,b):
+	def bresenhampath(self,start,end):
 		x1, y1 = start.returnXY()
 		x2, y2 = end.returnXY()
 		dx = x2 - x1
