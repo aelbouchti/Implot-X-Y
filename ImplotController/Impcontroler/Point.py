@@ -69,7 +69,7 @@ class Path():
 		#Lenth of pathpoints
 		self.L=len(self.pathpoints) 
 		self.code='' # The way we encode a bunch of points to simplify orders
-		self.PATH=[] #Final table of the pathpoints
+		self.PAT=[] #Final table of the pathpoints
 		
 		#example pathpoints=[(0,5),(1,3),(5,6),(10,0)] 
 		#pathdirections take the value of A in the simple equation AX+B=Y
@@ -162,24 +162,21 @@ class Path():
 					ln+[possibleB]
 				ln+=[possibleA]
 			ln+=[self.pathpoints[i+1]]
-		self.path=ln
+		self.PAT=ln
 
-		def printpathpoints(self):
-			for i in self.pathpoints:
-				print(i.X,i.Y)
+	def printpathpoints(self):
+		for i in self.pathpoints:
+			print(i.X,i.Y)
 				
-		def printoptimised(self):
-			for in self.PATH:
-				print(i.X,i.Y)
-				
-				
-				
+	def printoptimised(self):
+		for in self.PAT:
+			print(i.X,i.Y)	
 
 	def resetLists(self):
 		self.pathpoints=[]
 		#self.pathdirections=[]
 		self.Operation=False
-		self.PATH=[]
+		self.PAT=[]
 		
 	def STARTX(self):
 		self.bresenhampath()
