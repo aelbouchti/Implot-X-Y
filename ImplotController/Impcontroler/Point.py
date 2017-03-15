@@ -184,13 +184,6 @@ class Path():
 		self.bresenhampath()
 		self.optimise()
 		
-	def codeDATA(self):
-		code=''
-		for i in range(0,self.L):
-			a,b=self.pathpoints[i].returnXY()
-			code+='.'+str(self.operativelines[i])
-		     	code+='.'+str(a)+'.'+str(b)
-		self.code=code
 
 			
 	def decodeDATA(self,code=self.code):
@@ -208,8 +201,41 @@ class Path():
 		self.pathpoints=pp
 		self.operativelines=ol
 		
+class Code():
+	def __init__(self):
+		self.Code=''
+		self.checkpoints=[]
+		self.operativepaths[]
+
+	def Code(self):
+		code=''
+		for i in range(0,self.L):
+			a,b=self.checkpoints[i].returnXY()
+			code+='.'+str(self.operativepaths[i])
+		     	code+='.'+str(a)+'.'+str(b)
+		self.Code=code
 		
-		
+	def decodeDATA(self,code=self.code):
+		# 'PATH.0.0.T.2.0.F.0.0.T.0.2.F.0.0.T.0.-2.F.0.0.T.-2.0.F.0.0'
+		pp=[]
+		ol=[]
+		a=Point()
+		recode=code.split(".")
+		counter=0
+		for i in range(0,len(recode),3)
+		     	a.setXY(recode[i],recode[i+1])
+		     	pp+=[a]
+		     	ol+=[recode[i+2]]
+
+		self.checkpoints=pp
+		self.operatiepaths=ol
+
+	def setCode(self,Code):
+		self.Code=Code
+
+	def setLists(self,M,N):
+		self.checkpoints=M
+		self.operativepaths=N
 				
 			
 		
@@ -291,7 +317,6 @@ def generate_points_table(Xmax,Ymax,step):
 
 
 def Bresenhamline(start, end):
-	
     """Bresenham's Line Algorithm
     Produces a list of tuples from start and end
     """
@@ -347,9 +372,9 @@ def decodedirections(code):
 	a=code.split('/')
 	return int(a[0]),int(a[1])
 	
-def angletodistance():
+def angletodistance(angle,Dpignon):
 	
-def distancetoangle():
+def distancetoangle(distance,Dpignon):
 	
 
 #def MoveY():
