@@ -187,6 +187,8 @@ class Path():
 		
 
 			
+	"""
+	WTF IS THIS
 	def decodeDATA(self,code=self.code):
 		# 'PATH.0.0.T.2.0.F.0.0.T.0.2.F.0.0.T.0.-2.F.0.0.T.-2.0.F.0.0'
 		pp=[]
@@ -201,6 +203,7 @@ class Path():
 
 		self.pathpoints=pp
 		self.operativelines=ol
+	"""	
 		
 class Code():
 	def __init__(self):
