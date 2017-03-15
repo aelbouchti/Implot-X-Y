@@ -18,6 +18,7 @@ Xmax,Ymax=100,100
 
 #Point Class : Classic mathematical modelisation of a point in 2D space dd
 class Point(Object):
+	
 	#Initial X,Y
 	def __init__(self,a=0,b=0):
 		self.X=a
@@ -38,8 +39,6 @@ class Point(Object):
 		return self.X,self.Y
 	def X(self): return self.X
 	def Y(self): return self.Y
-	
-	
 #The abstract modelisation of an infinit number of points between 2 non-same points
 class Line():
 	def __init__(self,a,b):
@@ -59,64 +58,57 @@ class Path():
 	
 	def __init__(self,a=Point(0,0)):
 		self.pathpoints=[a]
-		self.operativelines['.PATH']
-		self.L=len(pathpoints)
+		self.operativelines=['.PATH']
+		self.L=len(self.pathpoints)
 		self.code=''
 		#pathpoints and pathdirections are 2 distinct sets with n and n - 1 elements
 		#example pathpoints=[(0,5),(1,3),(5,6),(10,0)] 
 		#pathdirections take the value of A in the simple equation AX+B=Y
 		#pathdirections=['-1/2','-4/3','5/6'] as strings not fractions
-		'PATH.0.0.F.0.-2.T.
+		#PATH.0.0.F.0.-2.T.
 		
-	def ACP(self,x,i=self.L):
+	def ACP(self,x,i):
 		#addcheckpoint : insert Point value in index i
-		     
-		if type(i)=='list'
+		if i>self.L:
+			i=self.L
+		if type(i)==list():
 		     self.pathpoints+=i
-		if i!=self.L : self.pathpoints.insert(i,x)
-		elif i==self.L : self.pathpoints+=[x]
-
-	
-	def bresenhampath(self,start,end):
-		x1, y1 = start.returnXY()
-		x2, y2 = end.returnXY()
-		dx = x2 - x1
-		dy = y2 - y1
-    		# Determine how steep the line is
-    		is_steep = abs(dy) > abs(dx)
-    		# Rotate line
-    		if is_steep:
-    		    	x1, y1 = y1, x1
-    	 	   	x2, y2 = y2, x2	
-		# Swap start and end points if necessary and store swap state
-    		swapped = False
-    		if x1 > x2:
-    	    		x1, x2 = x2, x1
-        		y1, y2 = y2, y1
-        		swapped = True
-    		# Recalculate differentials
-    		dx = x2 - x1
-    		dy = y2 - y1
-    		# Calculate error
-    		error = int(dx / 2.0)
-    		ystep = 1 if y1 < y2 else -1
-    		# Iterate over bounding box generating points between start and end
-    		y = y1
-    		points = []
+		if i<self.L : self.pathpoints.insert(i,x)
+		else : self.pathpoints+=[x]
+		
+	def bresenhampath(self,start=Point(),end=Point()):
+		x1,y1=start.X,start.Y
+		x2,y2=end.X,end.Y
+		dx=x2-x1
+		dy=y2-y1
+		is_steep=abs(dy)>abs(dx)
+		if is_steep:
+			x1,y1=y1,x1
+			x2,y2=y2,x2
+		swapped=False
+		if x1>x2:
+			x1,x2=x2,x1
+			y1,y2=y2,y1
+			swapped=True
+		dx=x2-x1
+		dy=y2-y1
+		error=int(dx/2.0)
+		ystep=1 if y1<y2 else -1
+		y=y1
+		points=[]
 		cord=Point(0,0)
-    		for x in range(x1, x2 + 1):
-        		coord = (y, x) if is_steep else (x, y)
-			cord.X=coord[0]
-			cord.Y=coord[1]
-        		points.append(cord)
-        		error -= abs(dy)
-        		if error < 0:
-            			y += ystep
-            			error += dx
-    		# Reverse the list if the coordinates were swapped
-    		if swapped:
-        		points.reverse()
-    			self.pathpoints=points
+		for x in range(x1,x2+1):
+			C=(x,y) if is_steep else (x,y)
+			cord.X=C[0]
+			cord.Y=C[1]
+			points.append(cord)
+			error-=abs(dy)
+			if error<0:
+				y+=ystep
+				error+=dx
+			if swapped:
+				points.reverse()
+		self.pathpoints=points
 			
 	def optimise(self):
 		A=0
