@@ -64,6 +64,8 @@ class Path():
 		self.pathpoints=[a]
 		self.start=Point()
 		self.end=Point()
+		self.XS=True
+		self.YS=True
 		self.Operation=False #Boolean decision weither to write or not
 		#Lenth of pathpoints
 		self.L=len(self.pathpoints) 
