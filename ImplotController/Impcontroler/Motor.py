@@ -113,7 +113,7 @@ class CURSOR(Object):
         self.PullPin=15
         self.Home=False
         self.HomeKnown=False
-        self.PathExec=Path()
+        self.CodeExec=Code()
         self.Grid=[]
         self.GRIDinfo=[0,0,0,0]
         
@@ -134,8 +134,8 @@ class CURSOR(Object):
         self.Position=Point(0,0)
         self.Home=True
 	
-    def GetPathData(self,DATA):
-        self.PathExec.decodeDATA(DATA)
+    def GetCodeData(self,Code):
+        self.CodeExec.decodeDATA(DATA)
     	
     def ExecuteData(self):
         self.MoveCursorTo(self.PathExec.pathpoints[0])
