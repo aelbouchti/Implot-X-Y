@@ -80,9 +80,8 @@ class COMMANDER(Motor):
         self.HOME=False
         self.SENSORPIN=0
         self.POS=0
-		self.STEP=0
-        
-        
+        self.STEP=0
+
     def setPins(self,pins):
         self.Motor.pins=pins
     
@@ -90,16 +89,15 @@ class COMMANDER(Motor):
         self.SENSORPIN=s
         
     def setHOME(self):
-        #
-        #
         self.HOME=True
+        
     def definstep(self,step):
-		self.Motor.movesteps(step)
-		self.STEP=step
+		    self.Motor.movesteps(step)
+		    self.STEP=step
 	
     def MoveOneStep(self,a): # -1 for backward
         self.Motor.movesteps(self.STEP*a)
-		self.POS+=a
+        self.POS+=a
         
     
 
@@ -167,7 +165,7 @@ class CURSOR(Object):
             
         
     def MoveCursorTo(self,point):
-        if self.HomeKnown=False:
+        if self.HomeKnown==False:
             self.HomeCursor()
         a,b,c,d=derivate(self.Position,point)
         if a==0:
@@ -184,8 +182,8 @@ class CURSOR(Object):
         
     def Click(self,operation=True):
         if operation==True:
-            #
+            pass
         else:
-            #
+            pass
     
     
