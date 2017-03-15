@@ -114,7 +114,7 @@ class CURSOR(Object):
         self.Home=False
         self.HomeKnown=False
         self.CodeExec=Code()
-        self.Grid=[]
+        self.Paths=[]
         self.GRIDinfo=[0,0,0,0]
         
     def setPins(self,p1,p2):
@@ -134,41 +134,53 @@ class CURSOR(Object):
         self.Position=Point(0,0)
         self.Home=True
 	
-    def GetCodeData(self,Code):
+    def GetCodeData(self,DATA):
         self.CodeExec.decodeDATA(DATA)
+
+    def GeneratePaths(self):
+        self.Paths=[]
+        for i in range(0,self.CodeExec.checkpoints-1):
+            P=Path()
+            P.setConfig(self.CodeExec.checkpoints[i],self.CodeExec.checkpoints[i+1],self.CodeExec.operativepaths[i])
+            self.Paths+=[P]
+        
     	
     def ExecuteData(self):
-        self.MoveCursorTo(self.PathExec.pathpoints[0])
-        OL=self.PathExec.operativelines
-        PP=self.PathExec.pathpoints
+        self.MoveCursorTo(self.CodeExec.startx)
         
-        for i in self.PathExec.L:
-            if OL[i]==T:
+        
+        for i in self.Paths:
+            if i.Operation:
+                i.bresenhampath()
+                i.optimise()
                 self.Click()
-                self.MoveCursorTo(PP[i])
+                for j in i.pathpoints:
+                    self.MoveCursorTo(j)
+                    
             else:
                 self.Click(False)
-                self.MoveCursorTo(PP[i])
+                self.moveCursorTo(Point(i.start,i.end))
+                self.moveCursorTo(Point(i.end,i.end))
+                    
+                
                 
             
         
     def MoveCursorTo(self,point):
         if self.HomeKnown=False:
             self.HomeCursor()
-		self.PathExec.bresenhampath(self.Position,point)
-		self.optimise()
-		while self.Position!=point:
-			for i in self.PathExec.pathpoints:
-				m,n=derivateC(self.Position,i)
-				if m==0 : 
-					self.YCommand.MoveOneStep(n)
-					self.Position.AVY(n)
-				else:
-					self.XCommand.MoveOneStep(m)
-					self.Position.AVX(m)
-				self.Grid.insert(self.Position)
+        a,b,c,d=derivate(self.Position,point)
+        if a==0:
+            while (self.Position.Y == point.Y )== False:
+                self.YCommand.MoveOneStep(c)
+                self.Position.AVY(c)
+        if b==0:
+            while (self.Position.X == point.X )== False:
+                self.XCommand.MoveOneStep(d)
+                self.Position.AVX(d)
 				
         self.Home=False
+
         
     def Click(self,operation=True):
         if operation==True:
