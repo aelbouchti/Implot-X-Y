@@ -17,37 +17,27 @@ Xmax,Ymax=100,100
 
 
 #Point Class : Classic mathematical modelisation of a point in 2D space dd
-class Point(object):
+class Point(Object):
 	#Initial X,Y
 	def __init__(self,a=0,b=0):
-        	self.X=a
-        	self.Y=b
+		self.X=a
+		self.Y=b
 	#Setting values
-    	def setXY(self,x,y):
-        	self.X=x
-		self.Y=y
+	def setXY(self,a,b):
+		self.X=a
+		self.Y=b
 	def setX(self,x):
 		self.X=x
 	def setY(self,y):
 		self.Y=y
 	def AVX(self,value):
-        	self.X+=value
-	def tupl(self,a):
-        	self.X=P[0]
-        	self.Y=P[1]
-    	def AVY(self,value):
-        	self.Y+=value
-    	def clonePoint(self,Point):
-        	self.X=Point.X
-        	self.Y=Point.Y
-	#Returning Values
-    	def returnXY(self):
-        	return self.X,self.Y
-    	def X(self):
-        	return self.X
-    	def Y(self):
-        	return self.Y
-
+		self.X+=value
+	def AVY(self,value):
+		self.Y+=value
+	def returnXY(self):
+		return self.X,self.Y
+	def X(self): return self.X
+	def Y(self): return self.Y
 	
 	
 #The abstract modelisation of an infinit number of points between 2 non-same points
