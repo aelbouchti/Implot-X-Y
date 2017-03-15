@@ -2,7 +2,6 @@
 # Imperial Creativity
 # ImplotControler 1.0
 
-
 # Point class and functions
 
 from math import *
@@ -96,7 +95,7 @@ class Path():
 			i=self.L
 		#if i i a list of points ( add automaticly att last index)
 		if type(i)==list():
-		     self.pathpoints+=i
+		     	self.pathpoints+=i
 		# Insert functions and case where i dosent satisfy anycondition
 		if i<self.L : self.pathpoints.insert(i,x)
 		else : self.pathpoints+=[x]
@@ -254,7 +253,7 @@ def disT(A,B,C):
 	a,b,c=givefunction(A,B)
 	return abs(C.x*a+C.y*b+c)//(sqrt(a*a+b*b))
 
-def derivate(p,q):
+def derivate(q,p):
 	a=p.X-q.X
 	b=p.Y-q.Y
 	return a,b,a>0,b>0
