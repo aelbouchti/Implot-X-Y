@@ -258,6 +258,12 @@ def derivate(q,p):
 	b=p.Y-q.Y
 	return a,b,a>0,b>0
 
+def derivateforcursor(q,p):
+	a=p.X-q.X
+	b=p.Y-q.Y
+	if a>0: k=1
+	return a,b,a>0,b>0
+
 def wichsens(p,q):
 	a,b,c,d=derivate(p,q)
 	if c==d:
