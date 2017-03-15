@@ -218,15 +218,14 @@ class Code():
 		self.Code=code
 
 	def decodeDATA(self,code):
-		# 'PATH.0.0.T.2.0.F.0.0.T.0.2.F.0.0.T.0.-2.F.0.0.T.-2.0.F.0.0'
+		self.Code=code
+		# 'F.0.0.T.2.0.F.0.0.T.0.2.F.0.0.T.0.-2.F.0.0.T.-2.0.F.0.0'
 		pp=[]
 		ol=[]
-		a=Point()
 		recode=code.split(".")
 		counter=0
 		for i in range(0,len(recode),3):
-		     	a.setXY(recode[i],recode[i+1])
-		     	pp+=[a]
+		     	pp+=[Point(recode[i],recode[i+1])]
 		     	ol+=[recode[i+2]]
 
 		self.checkpoints=pp
