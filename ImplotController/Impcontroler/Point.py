@@ -55,12 +55,12 @@ class Line():
 		
 class Path():
 	
-	def __init__(self,start,end):
+	def __init__(self):
 		""" Path class : Points Cursor should follow
 			Using Point class and Bresenham / Andrew algorithms
 		"""
 		#pathpoints at the start : having the one and only points a in general(0,0)
-		self.pathpoints=[a]
+		self.pathpoints=[]
 		self.start=Point()
 		self.end=Point()
 		self.XS=True
@@ -100,13 +100,13 @@ class Path():
 		if i<self.L : self.pathpoints.insert(i,x)
 		else : self.pathpoints+=[x]
 		
-	def bresenhampath(self,start=self.start,end=self.end):
+	def bresenhampath(self):
 		""" Bresenham's Algorithm for Line
 			Start and End are Point() classes
 			Ouput: Modifying the pathpoints to bresenhams points
 		"""
-		x1,y1=start.X,start.Y
-		x2,y2=end.X,end.Y
+		x1,y1=self.start.X,self.start.Y
+		x2,y2=self.end.X,self.end.Y
 		#Calculating differentials dx,dy
 		dx=x2-x1
 		dy=y2-y1
@@ -145,23 +145,27 @@ class Path():
 	def optimise(self):
 		a,b,m,n=Point(),Point(),0,0
 		k=self.pathpoints[0]
-		ln=[self.pathpoints[0]]
+		ln=[]
 		j=self.pathpoints[self.L-1]
-		for i in range(0,self.L-1):
-			a=self.pathpoints[i]
-			b=self.pathpoints[i+1]
+        t=Point(k.X,k.Y)
+		for i in self.pathpoints:
+			a,b=(t,i)
+			if equal(t,i): 
+                ln+=[Point(t.X,t.Y)]
+                continue
 			if isnextto(a,b):
-				ln+=[self.pathpoints[i+1]]
+				ln+=[Point(i.X,i.Y)]
 				continue
 			else:
-				possibleA,possibleB=Point(a.X,a.Y),Point(a.X,a.Y)
-				m,n=wichsens(b,a)
+				possibleA,possibleB=Point(t.X,t.Y),Point(t.X,t.Y)
+				m,n=wichsens(a,b)
 				possibleA.AVX(m)
 				possibleB.AVY(n)
 				if disT(k,j,possibleA)>disT(k,j,possibleB):
-					ln+[possibleB]
-				ln+=[possibleA]
-			ln+=[self.pathpoints[i+1]]
+					ln+=[possibleB]
+				else : ln+=[possibleA]
+                ln+=[Point(i.X,i.Y)]
+            t=i
 		self.PAT=ln
 
 	def printpathpoints(self):
@@ -169,7 +173,7 @@ class Path():
 			print(i.X,i.Y)
 				
 	def printoptimised(self):
-		for in self.PAT:
+		for i in self.PAT:
 			print(i.X,i.Y)	
 
 	def resetLists(self):
@@ -240,8 +244,9 @@ class Code():
 				
 			
 		
-	
 
+def equal(a,b):
+    return a.X==b.X and a.Y==b.Y
 	
 def givefunction(A,B):
 	dx=A.X-B.X
@@ -250,7 +255,7 @@ def givefunction(A,B):
 
 def disT(A,B,C):
 	a,b,c=givefunction(A,B)
-	return abs(C.x*a+C.y*b+c)//(sqrt(a*a+b*b))
+	return abs(C.X*a+C.Y*b+c)//(sqrt(a*a+b*b))
 
 def derivate(q,p):
 	a=p.X-q.X
