@@ -57,51 +57,80 @@ class Line():
 class Path():
 	
 	def __init__(self,a=Point(0,0)):
+		""" Path class : Points Cursor should follow
+			Using Point class and Bresenham / Andrew algorithms
+		"""
+		#pathpoints at the start : having the one and only points a in general(0,0)
 		self.pathpoints=[a]
-		self.operativelines=['.PATH']
-		self.L=len(self.pathpoints)
-		self.code=''
-		#pathpoints and pathdirections are 2 distinct sets with n and n - 1 elements
+		self.start=Point()
+		self.end=Point()
+		self.Operation=False #Boolean decision weither to write or not
+		#Lenth of pathpoints
+		self.L=len(self.pathpoints) 
+		self.code='' # The way we encode a bunch of points to simplify orders
+		
 		#example pathpoints=[(0,5),(1,3),(5,6),(10,0)] 
 		#pathdirections take the value of A in the simple equation AX+B=Y
 		#pathdirections=['-1/2','-4/3','5/6'] as strings not fractions
 		#PATH.0.0.F.0.-2.T.
 		
+	def setConfig(self,S,E,W):
+		self.start=S
+		self.end=E
+		self.Operation=W
+
+	def reLength(self):
+		self.L= len(self.operationpoints)
+
+	def ChangeOperation(self):
+		self.Operation= not Self.Operation
+		#Boolean manip
+		
 	def ACP(self,x,i):
 		#addcheckpoint : insert Point value in index i
+		#if i is out of index
 		if i>self.L:
 			i=self.L
+		#if i i a list of points ( add automaticly att last index)
 		if type(i)==list():
 		     self.pathpoints+=i
+		# Insert functions and case where i dosent satisfy anycondition
 		if i<self.L : self.pathpoints.insert(i,x)
 		else : self.pathpoints+=[x]
 		
 	def bresenhampath(self,start=Point(),end=Point()):
+		""" Bresenham's Algorithm for Line
+			Start and End are Point() classes
+			Ouput: Modifying the pathpoints to bresenhams points
+		"""
 		x1,y1=start.X,start.Y
 		x2,y2=end.X,end.Y
+		#Calculating differentials dx,dy
 		dx=x2-x1
 		dy=y2-y1
+		#defining if Line passing threw start and end is steep or not
 		is_steep=abs(dy)>abs(dx)
 		if is_steep:
 			x1,y1=y1,x1
 			x2,y2=y2,x2
+		#swapping points if its necessary 
 		swapped=False
 		if x1>x2:
 			x1,x2=x2,x1
 			y1,y2=y2,y1
 			swapped=True
+		#recalculating dx,dy
 		dx=x2-x1
 		dy=y2-y1
+		#Calculating Error
 		error=int(dx/2.0)
+		#ystep is -1 or +1
 		ystep=1 if y1<y2 else -1
 		y=y1
 		points=[]
-		cord=Point(0,0)
 		for x in range(x1,x2+1):
-			C=(x,y) if is_steep else (x,y)
-			cord.X=C[0]
-			cord.Y=C[1]
-			points.append(cord)
+			coord = Point(y, x) if is_steep else Point(x, y)
+			points.append(coord)
 			error-=abs(dy)
 			if error<0:
 				y+=ystep
@@ -109,22 +138,23 @@ class Path():
 			if swapped:
 				points.reverse()
 		self.pathpoints=points
+		self.L=len(points)
 			
 	def optimise(self):
 		A=0
-		a,b,m,n=0,0,0,0
+		a,b,m,n=Point(),Point(),0,0
 		k=self.pathpoints[0]
-		j=self.pathpoints[L]
-		possibleA,possibleB=Point(),Point()
-		for i in L-1:
+		j=self.pathpoints[self.L-1]
+		for i in range(0,self.L-1):
 			a=self.pathpoints[i]
 			b=self.pathpoints[i+1]
-			if Len==1:
+			if isnextto(a,b):
 				continue
 			else:
+				possibleA,possibleB=Point(a.X,a.Y)
 				m,n=wichsens(a,b)
-				possibleA=a.AVX(m)
-				possibleB=a.AVY(n)
+				possibleA.AVX(m)
+				possibleB.AVY(n)
 				if disT(k,j,possibleA)>disT(k,j,possibleB):
 					self.pathpoints.insert(i+1,possibleB)
 				self.pathpoints.insert(i+1,possibleA)
@@ -133,7 +163,7 @@ class Path():
 
 	def resetLists(self):
 		self.pathpoints=[]
-		self.pathdirections=[]
+		#self.pathdirections=[]
 		self.operativelines[]
 		     
 			
@@ -179,9 +209,9 @@ class Path():
 
 	
 def givefunction(A,B):
-	dx=A.x-B.x
-	dy=A.y-B.y
-	return dy , -dx , dx*A.y -dy*A.x
+	dx=A.X-B.X
+	dy=A.Y-B.Y
+	return dy , -dx , dx*A.Y -dy*A.X
 
 def disT(A,B,C):
 	a,b,c=givefunction(A,B)
@@ -211,6 +241,13 @@ def derivate2(p,q):
 
 def derivateC(q,p):
 	return (p.X-q.X),(p.Y-q.Y)
+
+def isnextto(a,b):
+	dx=abs(a.X-b.X)
+	dy=abs(a.Y-b.Y)
+	if dx+dy==1:
+		return True
+	return False
 
 
 # Euclide Algorithme for biggest commun divisor
@@ -325,4 +362,3 @@ def distancetoangle():
 #def estimtime():
     
 #def main():
-    
