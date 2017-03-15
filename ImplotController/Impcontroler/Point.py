@@ -56,7 +56,7 @@ class Line():
 		
 class Path():
 	
-	def __init__(self,a=Point(0,0)):
+	def __init__(self,start,end):
 		""" Path class : Points Cursor should follow
 			Using Point class and Bresenham / Andrew algorithms
 		"""
@@ -99,7 +99,7 @@ class Path():
 		if i<self.L : self.pathpoints.insert(i,x)
 		else : self.pathpoints+=[x]
 		
-	def bresenhampath(self,start=Point(),end=Point()):
+	def bresenhampath(self,start=self.start,end=self.end):
 		""" Bresenham's Algorithm for Line
 			Start and End are Point() classes
 			Ouput: Modifying the pathpoints to bresenhams points
@@ -204,6 +204,7 @@ class Path():
 class Code():
 	def __init__(self):
 		self.Code=''
+		self.startx=Point()
 		self.checkpoints=[]
 		self.operativepaths[]
 
