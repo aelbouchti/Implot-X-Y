@@ -21,8 +21,8 @@ class Motor(object):
     DELAY = 0.02
     def __init__(self, pins, delay=DELAY):
         self.PINS = pins
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.PINS, GPIO.OUT)
+        #GPIO.setmode(GPIO.BCM)
+        #GPIO.setup(self.PINS, GPIO.OUT)
         self.DELAY = delay
         self.stat = []
         self.LL = [
@@ -42,8 +42,8 @@ class Motor(object):
     def abord(self, type, value, tb):
         GPIO.cleanup(self.PINS)
 
-    def movesteps(self, value):
-        steps = value - self.steps
+    def movesteps(self, steps):
+        #steps = value - self.steps
         self.move(steps)
 
     def move(self, steps):
@@ -68,14 +68,15 @@ class Motor(object):
     def movestep(self, state):
         #HIGH OR LOW
         self.stat = state
-        GPIO.output(self.PINS, state)
+        #GPIO.output(self.PINS, state)
 		
 
 
         
 class COMMANDER(Motor):
     
-    def __init__(self,name):
+    def __init__(self,name,pins):
+        Motor.__init__(self,pins)
         self.name=name
         self.HOME=False
         self.SENSORPIN=0
@@ -92,11 +93,10 @@ class COMMANDER(Motor):
         self.HOME=True
         
     def definstep(self,step):
-		    self.Motor.movesteps(step)
-		    self.STEP=step
-	
+		Motor.movesteps(step)
+		self.STEP=step
     def MoveOneStep(self,a): # -1 for backward
-        self.Motor.movesteps(self.STEP*a)
+        Motor.movesteps(self.STEP*a)
         self.POS+=a
         
     
