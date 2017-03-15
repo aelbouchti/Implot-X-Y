@@ -16,7 +16,7 @@ Xmax,Ymax=100,100
 
 
 #Point Class : Classic mathematical modelisation of a point in 2D space dd
-class Point(Object):
+class Point():
 	
 	#Initial X,Y
 	def __init__(self,a=0,b=0):
@@ -207,30 +207,30 @@ class Code():
 		self.Code=''
 		self.startx=Point()
 		self.checkpoints=[]
-		self.operativepaths[]
+		self.operativepaths=[]
 
 	def Code(self):
 		code=''
 		for i in range(0,self.L):
 			a,b=self.checkpoints[i].returnXY()
 			code+='.'+str(self.operativepaths[i])
-		     	code+='.'+str(a)+'.'+str(b)
+			code+='.'+str(a)+'.'+str(b)
 		self.Code=code
-		
-	def decodeDATA(self,code=self.code):
+
+	def decodeDATA(self,code):
 		# 'PATH.0.0.T.2.0.F.0.0.T.0.2.F.0.0.T.0.-2.F.0.0.T.-2.0.F.0.0'
 		pp=[]
 		ol=[]
 		a=Point()
 		recode=code.split(".")
 		counter=0
-		for i in range(0,len(recode),3)
+		for i in range(0,len(recode),3):
 		     	a.setXY(recode[i],recode[i+1])
 		     	pp+=[a]
 		     	ol+=[recode[i+2]]
 
 		self.checkpoints=pp
-		self.operatiepaths=ol
+		self.operativepaths=ol
 
 	def setCode(self,Code):
 		self.Code=Code
