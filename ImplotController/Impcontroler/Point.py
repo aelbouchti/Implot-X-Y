@@ -68,6 +68,7 @@ class Path():
 		#Lenth of pathpoints
 		self.L=len(self.pathpoints) 
 		self.code='' # The way we encode a bunch of points to simplify orders
+		self.PATH=[] #Final table of the pathpoints
 		
 		#example pathpoints=[(0,5),(1,3),(5,6),(10,0)] 
 		#pathdirections take the value of A in the simple equation AX+B=Y
@@ -141,37 +142,48 @@ class Path():
 		self.L=len(points)
 			
 	def optimise(self):
-		A=0
 		a,b,m,n=Point(),Point(),0,0
 		k=self.pathpoints[0]
+		ln=[self.pathpoints[0]]
 		j=self.pathpoints[self.L-1]
 		for i in range(0,self.L-1):
 			a=self.pathpoints[i]
 			b=self.pathpoints[i+1]
 			if isnextto(a,b):
+				ln+=[self.pathpoints[i+1]]
 				continue
 			else:
-				possibleA,possibleB=Point(a.X,a.Y)
-				m,n=wichsens(a,b)
+				possibleA,possibleB=Point(a.X,a.Y),Point(a.X,a.Y)
+				m,n=wichsens(b,a)
 				possibleA.AVX(m)
 				possibleB.AVY(n)
 				if disT(k,j,possibleA)>disT(k,j,possibleB):
-					self.pathpoints.insert(i+1,possibleB)
-				self.pathpoints.insert(i+1,possibleA)
+					ln+[possibleB]
+				ln+=[possibleA]
+			ln+=[self.pathpoints[i+1]]
+		self.path=ln
+
+		def printpathpoints(self):
+			for i in self.pathpoints:
+				print(i.X,i.Y)
+				
+		def printoptimised(self):
+			for in self.PATH:
+				print(i.X,i.Y)
+				
 				
 				
 
 	def resetLists(self):
 		self.pathpoints=[]
 		#self.pathdirections=[]
-		self.operativelines[]
-		     
-			
-	
-	def AOL(self,OLTab): #ADD OPERATIVE LINES
-		self.operativelines=OLTab
-		     
-
+		self.Operation=False
+		self.PATH=[]
+		
+	def STARTX(self):
+		self.bresenhampath()
+		self.optimise()
+		
 	def codeDATA(self):
 		code=''
 		for i in range(0,self.L):
@@ -195,10 +207,6 @@ class Path():
 
 		self.pathpoints=pp
 		self.operativelines=ol
-		
-	def config(self):
-		self.optimise()
-		self.L=len(pathpoints)
 		
 		
 		
@@ -282,48 +290,55 @@ def generate_points_table(Xmax,Ymax,step):
 	return finaltable,len(finaltable[0],len(finaltable))
 
 
-def bresenham_line(start, end):
-    	# Setup initial conditions
-	x1, y1 = start.returnXY()
-	x2, y2 = end.returnXY()
-	dx = x2 - x1
-	dy = y2 - y1
-    	# Determine how steep the line is
-    	is_steep = abs(dy) > abs(dx)
-    	# Rotate line
-    	if is_steep:
-        	x1, y1 = y1, x1
-        	x2, y2 = y2, x2	
-	# Swap start and end points if necessary and store swap state
-        swapped = False
-    	if x1 > x2:
-        	x1, x2 = x2, x1
-        	y1, y2 = y2, y1
-        	swapped = True
-    	# Recalculate differentials
-    	dx = x2 - x1
-    	dy = y2 - y1
-    	# Calculate error
-    	error = int(dx / 2.0)
-    	ystep = 1 if y1 < y2 else -1
-    	# Iterate over bounding box generating points between start and end
-    	y = y1
-    	points = []
-	cord=Point(0,0)
-    	for x in range(x1, x2 + 1):
-        	coord = (y, x) if is_steep else (x, y)
-		cord.X=coord[0]
-		cord.Y=coord[1]
-        	points.append(cord)
-        	error -= abs(dy)
-        	if error < 0:
-            		y += ystep
-            		error += dx
-    	# Reverse the list if the coordinates were swapped
-    	if swapped:
-        	points.reverse()
-    		return points
-
+def Bresenhamline(start, end):
+	
+    """Bresenham's Line Algorithm
+    Produces a list of tuples from start and end
+    """
+    # Setup initial conditions
+    x1, y1 = start
+    x2, y2 = end
+    dx = x2 - x1
+    dy = y2 - y1
+ 
+    # Determine how steep the line is
+    is_steep = abs(dy) > abs(dx)
+ 
+    # Rotate line
+    if is_steep:
+        x1, y1 = y1, x1
+        x2, y2 = y2, x2
+ 
+    # Swap start and end points if necessary and store swap state
+    swapped = False
+    if x1 > x2:
+        x1, x2 = x2, x1
+        y1, y2 = y2, y1
+        swapped = True
+ 
+    # Recalculate differentials
+    dx = x2 - x1
+    dy = y2 - y1
+ 
+    # Calculate error
+    error = int(dx / 2.0)
+    ystep = 1 if y1 < y2 else -1
+ 
+    # Iterate over bounding box generating points between start and end
+    y = y1
+    points = []
+    for x in range(x1, x2 + 1):
+        coord = (y, x) if is_steep else (x, y)
+        points.append(coord)
+        error -= abs(dy)
+        if error < 0:
+            y += ystep
+            error += dx
+ 
+    # Reverse the list if the coordinates were swapped
+    if swapped:
+        points.reverse()
+    return points
 
 decision = lambda a : a>0
 def decision(a) : return a>0
@@ -362,3 +377,4 @@ def distancetoangle():
 #def estimtime():
     
 #def main():
+    
