@@ -29,9 +29,8 @@ def StartX():
 
 def Data(CODE):
     Motor.Motor.GetCodeData(CODE)
-
     
-def WriteData( ):
+def WriteData():
     Motor.Motor.GeneratePaths()
     Motor.Motor.ExecuteData()
     
