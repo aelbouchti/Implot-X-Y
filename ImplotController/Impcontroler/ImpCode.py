@@ -10,8 +10,8 @@ Generating Paths and Executing Data
 
 #from Impcontroler import Point
 from Impcontroler import Motor
-from time import sleep
-from math import sleep
+#from time import sleep
+#from math import sleep
 
 M1pins=[]
 M2pins=[]
