@@ -63,8 +63,7 @@ class Path():
 		self.pathpoints=[]
 		self.start=Point()
 		self.end=Point()
-		self.XS=True
-		self.YS=True
+		
 		self.Operation=False #Boolean decision weither to write or not
 		#Lenth of pathpoints
 		self.L=len(self.pathpoints) 
@@ -79,7 +78,10 @@ class Path():
 	def setConfig(self,S,E,W):
 		self.start=S
 		self.end=E
-		self.Operation=W
+		if W=="T" :
+			self.Operation=True
+		if W=="F":
+			self.Operation=False
 
 	def reLength(self):
 		self.L= len(self.operationpoints)
@@ -143,30 +145,7 @@ class Path():
 		self.L=len(points)
 			
 	def optimise(self):
-		a,b,m,n=Point(),Point(),0,0
-		k=self.pathpoints[0]
-		ln=[]
-		j=self.pathpoints[self.L-1]
-        t=Point(k.X,k.Y)
-		for i in self.pathpoints:
-			a,b=(t,i)
-			if equal(t,i): 
-                ln+=[Point(t.X,t.Y)]
-                continue
-			if isnextto(a,b):
-				ln+=[Point(i.X,i.Y)]
-				continue
-			else:
-				possibleA,possibleB=Point(t.X,t.Y),Point(t.X,t.Y)
-				m,n=wichsens(a,b)
-				possibleA.AVX(m)
-				possibleB.AVY(n)
-				if disT(k,j,possibleA)>disT(k,j,possibleB):
-					ln+=[possibleB]
-				else : ln+=[possibleA]
-                ln+=[Point(i.X,i.Y)]
-            t=i
-		self.PAT=ln
+		self.PAT=optimise(self.pathpoints,self.start,self.end)
 
 	def printpathpoints(self):
 		for i in self.pathpoints:
@@ -227,9 +206,9 @@ class Code():
 		pp=[]
 		ol=[]
 		recode=code.split(".")
-		counter=0
+		
 		for i in range(0,len(recode),3):
-		     	pp+=[Point(recode[i],recode[i+1])]
+		     	pp+=[Point(int(recode[i]),int(recode[i+1]))]
 		     	ol+=[recode[i+2]]
 
 		self.checkpoints=pp
@@ -244,6 +223,23 @@ class Code():
 				
 			
 		
+def optimise(l,start,end):
+	if len(l)==0:
+		return []
+	if len(l)==1:
+		return l+ [Point(end.X,end.Y)]
+	if len(l)>2:
+		return optimise([l[0]]+[l[1]],start,end)+optimise(l[1::],start,end)
+	if len(l)==2:
+		if isnextto(l[0],l[1]):
+			return [l[0]]
+		elif disT(start,end,Point(l[0].X,l[0].Y+1))>disT(start,end,Point(l[0].X+1,l[0].Y)):
+			return [l[0]]+ [Point(l[0].X+1,l[0].Y)]
+		else:
+			return [l[0]]+ [Point(l[0].X,l[0].Y+1)]
+
+			
+
 
 def equal(a,b):
     return a.X==b.X and a.Y==b.Y
