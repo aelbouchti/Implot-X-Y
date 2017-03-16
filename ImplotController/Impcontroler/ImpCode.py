@@ -15,25 +15,25 @@ from Impcontroler import Motor
 
 M1pins = []
 M2pins = []
-S1P, S2P =0, 0
+S1P, S2P = 0, 0
 Xmax, Ymax = 0, 0
 
 
 def StartX():
-    Motor.CURSOR = CURSOR()
-    Motor.CURSOR.setPins(M1pins, M2pins)
-    Motor.CURSOR.sensorPins(S1P, S2P)
-    Motor.CURSOR.HomeCursor()
+    Motor = Motor.CURSOR()
+    Motor.Motor.setPins(M1pins, M2pins)
+    Motor.Motor.sensorPins(S1P, S2P)
+    Motor.Motor.HomeCursor()
 
 
 
 def Data(CODE):
-    Motor.CURSOR.GetCodeData(CODE)
+    Motor.Motor.GetCodeData(CODE)
 
     
 def WriteData( ):
-    Motor.CURSOR.GeneratePaths()
-    Motor.CURSOR.ExecuteData()
+    Motor.Motor.GeneratePaths()
+    Motor.Motor.ExecuteData()
     
 if __name__ == "__main__":
     StartX()
