@@ -6,7 +6,8 @@
 
 
 from time import sleep
-#from math import sqrt
+from math import sqrt
+from matplotlib import pyplot as plt
 
 try:
     import RPi.GPIO as GPIO
@@ -129,7 +130,10 @@ class CURSOR():
     def GetCodeData(self,DATA):
         self.CodeExec.decodeDATA(DATA)
 
-    def GeneratePaths(self):
+    def GeneratePaths(self,plot=False):
+		plt.iont()
+		fig=plt.figure(1)
+		
         self.Paths=[]
         for i in range(0,len(self.CodeExec.checkpoints)-1):
             P=Path()
@@ -137,8 +141,9 @@ class CURSOR():
             self.Paths+=[P]
         
     	
-    def ExecuteData(self):
-        
+    def ExecuteData(self,plot=False):
+        plt.ion()
+		fig=plt.figure(1)
         
         for i in self.Paths:
             if i.Operation:
