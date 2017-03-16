@@ -139,38 +139,45 @@ class CURSOR():
         
     	
     def ExecuteData(self):
-        self.MoveCursorTo(self.CodeExec.startx)
         
         
         for i in self.Paths:
             if i.Operation:
                 i.bresenhampath()
                 i.optimise()
-                self.Click()
-                for j in i.pathpoints:
+                print('optimised')
+                #self.Click()
+                for j in i.PAT:
+                    print('moving to',j.X,j.Y)
                     self.MoveCursorTo(j)
                     
             else:
                 self.Click(False)
-                self.moveCursorTo(Point(i.start,i.end))
-                self.moveCursorTo(Point(i.end,i.end))
+                print('OneAxeTransition')
+                self.MoveCursorTo(Point(i.start.X,i.end.Y))
+                self.MoveCursorTo(Point(i.end.X,i.end.Y))
                     
                 
                 
             
         
     def MoveCursorTo(self,point):
-        if self.HomeKnown==False:
-            self.HomeCursor()
-        a,b,c,d=derivate(self.Position,point)
-        if a==0:
-            while (self.Position.Y == point.Y )== False:
-                self.YCommand.MoveOneStep(d)
-                self.Position.AVY(d)
-        if b==0:
-            while (self.Position.X == point.X )== False:
-                self.XCommand.MoveOneStep(c)
-                self.Position.AVX(c)
+        if equal(self.Position,point):
+            self.Home=True
+            print('equal')
+        else:
+            a,b,c,d=derivate(Point(self.Position.X,self.Position.Y),point)
+            print("abcd",a,b,c,d)
+            if a==0:
+                while (self.Position.Y == point.Y )== False:
+                    print('Y+1')
+                    self.YCommand.MoveOneStep(d)
+                    self.Position.AVY(d)
+            if b==0:
+                while (self.Position.X == point.X )== False:
+                    print('X+1')
+                    self.XCommand.MoveOneStep(c)
+                    self.Position.AVX(c)
 				
         self.Home=False
 
