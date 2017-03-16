@@ -6,7 +6,7 @@
 
 
 from time import sleep
-from math import sqrt
+#from math import sqrt
 
 try:
     import RPi.GPIO as GPIO
@@ -17,7 +17,6 @@ from Implotcontroler import Point
 
 
 class Motor(object):
-    
     DELAY = 0.02
     def __init__(self, pins, delay=DELAY):
         self.PINS = pins
@@ -26,11 +25,11 @@ class Motor(object):
         self.DELAY = delay
         self.stat = []
         self.LL = [
-            (1, 1, 0, 0),
-            (1, 0, 1, 0),
-            (0, 1, 1, 0),
-            (0, 1, 0, 1),
-            (0, 0, 1, 1),
+            (1, 1, 0, 0), 
+            (1, 0, 1, 0), 
+            (0, 1, 1, 0), 
+            (0, 1, 0, 1), 
+            (0, 0, 1, 1), 
             (1, 0, 0, 1)]
         self.zero = [0,0,0,0]
         self.steps = 0
