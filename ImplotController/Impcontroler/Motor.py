@@ -4,10 +4,10 @@
 
 
 
-import sys
-from time import *
-from math import *
-from time import *
+
+from time import sleep
+from math import sqrt
+
 try:
     import RPi.GPIO as GPIO
 except RuntimeError:
