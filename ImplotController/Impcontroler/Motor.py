@@ -4,10 +4,10 @@
 
 
 
-import sys
-from time import *
-from math import *
-from time import *
+
+from time import sleep
+#from math import sqrt
+
 try:
     import RPi.GPIO as GPIO
 except RuntimeError:
@@ -17,7 +17,6 @@ from Implotcontroler import Point
 
 
 class Motor(object):
-    
     DELAY = 0.02
     def __init__(self, pins, delay=DELAY):
         self.PINS = pins
@@ -32,24 +31,22 @@ class Motor(object):
             (0, 1, 0, 1),
             (0, 0, 1, 1),
             (1, 0, 0, 1)]
-        self.zero = [0,0,0,0]
+        self.zero = [0, 0, 0, 0]
         self.steps = 0
         self.release()
 
     def infopls(self):
         return 'Motor at ', self.PINS, self.steps
 
-    def abord(self, type, value, tb):
-        GPIO.cleanup(self.PINS)
+    def abord(self):
+        #GPIO.cleanup(self.PINS)
 
-    def movesteps(self, steps):
+    def movesteps(self, a):
         #steps = value - self.steps
-        self.move(steps)
+        self.move(a)
 
     def move(self, steps):
-        
-        if steps == 0:
-            return '-0-'
+
         
         rotation = steps//abs(steps)
         for i in range(0, steps, rotation):
@@ -73,40 +70,36 @@ class Motor(object):
 
 
         
-class COMMANDER(Motor):
+class COMMANDER():
     
     def __init__(self,name,pins):
-        Motor.__init__(self,pins)
+        self.Motor=Motor(pins)
         self.name=name
         self.HOME=False
         self.SENSORPIN=0
         self.POS=0
         self.STEP=0
-
     def setPins(self,pins):
         self.Motor.pins=pins
-    
     def SSP(self,s):
         self.SENSORPIN=s
-        
     def setHOME(self):
         self.HOME=True
-        
     def definstep(self,step):
-		Motor.movesteps(step)
-		self.STEP=step
+        self.Motor.movesteps(step)
+        self.STEP=step
     def MoveOneStep(self,a): # -1 for backward
-        Motor.movesteps(self.STEP*a)
+        self.Motor.movesteps(self.STEP*a)
         self.POS+=a
         
     
 
-class CURSOR(Object):
+class CURSOR():
     
-    def __init__(self):
+    def __init__(self,pins1,pins2):
 		
-        self.XCommand=COMMANDER('X')
-        self.YCommand=COMMANDER('Y')
+        self.XCommand=COMMANDER('X',pins1)
+        self.YCommand=COMMANDER('Y',pins2)
         self.Position=Point(0,0)
         self.PullPin=15
         self.Home=False
@@ -131,51 +124,59 @@ class CURSOR(Object):
         self.YCommand.setHOME()
         self.Position=Point(0,0)
         self.Home=True
+        self.HomeKnow=True
 	
     def GetCodeData(self,DATA):
         self.CodeExec.decodeDATA(DATA)
 
     def GeneratePaths(self):
         self.Paths=[]
-        for i in range(0,self.CodeExec.checkpoints-1):
+        for i in range(0,len(self.CodeExec.checkpoints)-1):
             P=Path()
             P.setConfig(self.CodeExec.checkpoints[i],self.CodeExec.checkpoints[i+1],self.CodeExec.operativepaths[i])
             self.Paths+=[P]
         
     	
     def ExecuteData(self):
-        self.MoveCursorTo(self.CodeExec.startx)
         
         
         for i in self.Paths:
             if i.Operation:
                 i.bresenhampath()
                 i.optimise()
-                self.Click()
-                for j in i.pathpoints:
+                print('optimised')
+                #self.Click()
+                for j in i.PAT:
+                    print('moving to',j.X,j.Y)
                     self.MoveCursorTo(j)
                     
             else:
                 self.Click(False)
-                self.moveCursorTo(Point(i.start,i.end))
-                self.moveCursorTo(Point(i.end,i.end))
+                print('OneAxeTransition')
+                self.MoveCursorTo(Point(i.start.X,i.end.Y))
+                self.MoveCursorTo(Point(i.end.X,i.end.Y))
                     
                 
                 
             
         
     def MoveCursorTo(self,point):
-        if self.HomeKnown==False:
-            self.HomeCursor()
-        a,b,c,d=derivate(self.Position,point)
-        if a==0:
-            while (self.Position.Y == point.Y )== False:
-                self.YCommand.MoveOneStep(c)
-                self.Position.AVY(c)
-        if b==0:
-            while (self.Position.X == point.X )== False:
-                self.XCommand.MoveOneStep(d)
-                self.Position.AVX(d)
+        if equal(self.Position,point):
+            self.Home=True
+            print('equal')
+        else:
+            a,b,c,d=derivate(Point(self.Position.X,self.Position.Y),point)
+            print("abcd",a,b,c,d)
+            if a==0:
+                while (self.Position.Y == point.Y )== False:
+                    print('Y+1')
+                    self.YCommand.MoveOneStep(d)
+                    self.Position.AVY(d)
+            if b==0:
+                while (self.Position.X == point.X )== False:
+                    print('X+1')
+                    self.XCommand.MoveOneStep(c)
+                    self.Position.AVX(c)
 				
         self.Home=False
 

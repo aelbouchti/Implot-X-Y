@@ -55,21 +55,20 @@ class Line():
 		
 class Path():
 	
-	def __init__(self,start,end):
+	def __init__(self):
 		""" Path class : Points Cursor should follow
 			Using Point class and Bresenham / Andrew algorithms
 		"""
 		#pathpoints at the start : having the one and only points a in general(0,0)
-		self.pathpoints=[a]
+		self.pathpoints=[]
 		self.start=Point()
 		self.end=Point()
-		self.XS=True
-		self.YS=True
+		
 		self.Operation=False #Boolean decision weither to write or not
 		#Lenth of pathpoints
 		self.L=len(self.pathpoints) 
 		self.code='' # The way we encode a bunch of points to simplify orders
-		self.PATH=[] #Final table of the pathpoints
+		self.PAT=[] #Final table of the pathpoints
 		
 		#example pathpoints=[(0,5),(1,3),(5,6),(10,0)] 
 		#pathdirections take the value of A in the simple equation AX+B=Y
@@ -79,7 +78,10 @@ class Path():
 	def setConfig(self,S,E,W):
 		self.start=S
 		self.end=E
-		self.Operation=W
+		if W=="T" :
+			self.Operation=True
+		if W=="F":
+			self.Operation=False
 
 	def reLength(self):
 		self.L= len(self.operationpoints)
@@ -100,13 +102,13 @@ class Path():
 		if i<self.L : self.pathpoints.insert(i,x)
 		else : self.pathpoints+=[x]
 		
-	def bresenhampath(self,start=self.start,end=self.end):
+	def bresenhampath(self):
 		""" Bresenham's Algorithm for Line
 			Start and End are Point() classes
 			Ouput: Modifying the pathpoints to bresenhams points
 		"""
-		x1,y1=start.X,start.Y
-		x2,y2=end.X,end.Y
+		x1,y1=self.start.X,self.start.Y
+		x2,y2=self.end.X,self.end.Y
 		#Calculating differentials dx,dy
 		dx=x2-x1
 		dy=y2-y1
@@ -143,43 +145,21 @@ class Path():
 		self.L=len(points)
 			
 	def optimise(self):
-		a,b,m,n=Point(),Point(),0,0
-		k=self.pathpoints[0]
-		ln=[self.pathpoints[0]]
-		j=self.pathpoints[self.L-1]
-		for i in range(0,self.L-1):
-			a=self.pathpoints[i]
-			b=self.pathpoints[i+1]
-			if isnextto(a,b):
-				ln+=[self.pathpoints[i+1]]
-				continue
-			else:
-				possibleA,possibleB=Point(a.X,a.Y),Point(a.X,a.Y)
-				m,n=wichsens(b,a)
-				possibleA.AVX(m)
-				possibleB.AVY(n)
-				if disT(k,j,possibleA)>disT(k,j,possibleB):
-					ln+[possibleB]
-				ln+=[possibleA]
-			ln+=[self.pathpoints[i+1]]
-		self.path=ln
+		self.PAT=optimise(self.pathpoints,self.start,self.end)
 
-		def printpathpoints(self):
-			for i in self.pathpoints:
-				print(i.X,i.Y)
+	def printpathpoints(self):
+		for i in self.pathpoints:
+			print(i.X,i.Y)
 				
-		def printoptimised(self):
-			for in self.PATH:
-				print(i.X,i.Y)
-				
-				
-				
+	def printoptimised(self):
+		for i in self.PAT:
+			print(i.X,i.Y)	
 
 	def resetLists(self):
 		self.pathpoints=[]
 		#self.pathdirections=[]
 		self.Operation=False
-		self.PATH=[]
+		self.PAT=[]
 		
 	def STARTX(self):
 		self.bresenhampath()
@@ -187,6 +167,8 @@ class Path():
 		
 
 			
+	"""
+	WTF IS THIS
 	def decodeDATA(self,code=self.code):
 		# 'PATH.0.0.T.2.0.F.0.0.T.0.2.F.0.0.T.0.-2.F.0.0.T.-2.0.F.0.0'
 		pp=[]
@@ -201,6 +183,7 @@ class Path():
 
 		self.pathpoints=pp
 		self.operativelines=ol
+	"""	
 		
 class Code():
 	def __init__(self):
@@ -218,15 +201,14 @@ class Code():
 		self.Code=code
 
 	def decodeDATA(self,code):
-		# 'PATH.0.0.T.2.0.F.0.0.T.0.2.F.0.0.T.0.-2.F.0.0.T.-2.0.F.0.0'
+		self.Code=code
+		# 'F.0.0.T.2.0.F.0.0.T.0.2.F.0.0.T.0.-2.F.0.0.T.-2.0.F.0.0'
 		pp=[]
 		ol=[]
-		a=Point()
 		recode=code.split(".")
-		counter=0
+		
 		for i in range(0,len(recode),3):
-		     	a.setXY(recode[i],recode[i+1])
-		     	pp+=[a]
+		     	pp+=[Point(int(recode[i]),int(recode[i+1]))]
 		     	ol+=[recode[i+2]]
 
 		self.checkpoints=pp
@@ -241,8 +223,26 @@ class Code():
 				
 			
 		
-	
+def optimise(l,start,end):
+	if len(l)==0:
+		return []
+	if len(l)==1:
+		return l+ [Point(end.X,end.Y)]
+	if len(l)>2:
+		return optimise([l[0]]+[l[1]],start,end)+optimise(l[1::],start,end)
+	if len(l)==2:
+		if isnextto(l[0],l[1]):
+			return [l[0]]
+		elif disT(start,end,Point(l[0].X,l[0].Y+1))>disT(start,end,Point(l[0].X+1,l[0].Y)):
+			return [l[0]]+ [Point(l[0].X+1,l[0].Y)]
+		else:
+			return [l[0]]+ [Point(l[0].X,l[0].Y+1)]
 
+			
+
+
+def equal(a,b):
+    return a.X==b.X and a.Y==b.Y
 	
 def givefunction(A,B):
 	dx=A.X-B.X
@@ -251,7 +251,7 @@ def givefunction(A,B):
 
 def disT(A,B,C):
 	a,b,c=givefunction(A,B)
-	return abs(C.x*a+C.y*b+c)//(sqrt(a*a+b*b))
+	return abs(C.X*a+C.Y*b+c)//(sqrt(a*a+b*b))
 
 def derivate(q,p):
 	a=p.X-q.X

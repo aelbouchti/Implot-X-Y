@@ -11,10 +11,10 @@ with open('LICENSE') as f:
 
 setup(
     name='implotcontroler',
-    version='0.1.0',
+    version='2.0.0',
     description='Driver for 2D implot',
     long_description=readme,
-    author='Mohammed-Amine Hilaly',
+    author='Imperial Creaitivy',
     author_email='hilalyamine@gmail.com',
     url='',
     license=license,
