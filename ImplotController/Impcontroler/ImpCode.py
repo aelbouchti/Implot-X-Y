@@ -8,7 +8,7 @@ Generating Paths and Executing Data
 
 
 
-from Impcontroler import Point
+#from Impcontroler import Point
 from Impcontroler import Motor
 from time import sleep
 from math import sleep
@@ -20,20 +20,20 @@ Xmax,Ymax=0, 0
 
 
 def StartX():
-    Point.CURSOR=CURSOR()
-    Point.CURSOR.setPins(M1pins, M2pins)
-    Point.CURSOR.sensorPins(S1P, S2P)
-    Point.CURSOR.HomeCursor()
+    Motor.CURSOR=CURSOR()
+    Motor.CURSOR.setPins(M1pins, M2pins)
+    Motor.CURSOR.sensorPins(S1P, S2P)
+    Motor.CURSOR.HomeCursor()
 
 
 
 def Data(CODE):
-    Point.CURSOR.GetCodeData(CODE)
+    Motor.CURSOR.GetCodeData(CODE)
 
     
 def WriteData():
-    Point.CURSOR.GeneratePaths()
-    Point.CURSOR.ExecuteData()
+    Motor.CURSOR.GeneratePaths()
+    Motor.CURSOR.ExecuteData()
     
 if __name__=="__main__":
     StartX()
