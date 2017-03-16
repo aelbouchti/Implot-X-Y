@@ -25,13 +25,13 @@ class Motor(object):
         self.DELAY = delay
         self.stat = []
         self.LL = [
-            (1, 1, 0, 0), 
-            (1, 0, 1, 0), 
-            (0, 1, 1, 0), 
-            (0, 1, 0, 1), 
-            (0, 0, 1, 1), 
+            (1, 1, 0, 0),
+            (1, 0, 1, 0),
+            (0, 1, 1, 0),
+            (0, 1, 0, 1),
+            (0, 0, 1, 1),
             (1, 0, 0, 1)]
-        self.zero = [0,0,0,0]
+        self.zero = [0, 0, 0, 0]
         self.steps = 0
         self.release()
 
