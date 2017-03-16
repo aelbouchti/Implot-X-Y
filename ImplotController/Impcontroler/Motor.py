@@ -38,8 +38,8 @@ class Motor(object):
     def infopls(self):
         return 'Motor at ', self.PINS, self.steps
 
-    def abord(self, type, value, tb):
-        GPIO.cleanup(self.PINS)
+    def abord(self):
+        #GPIO.cleanup(self.PINS)
 
     def movesteps(self, a):
         #steps = value - self.steps
