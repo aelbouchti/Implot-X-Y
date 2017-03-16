@@ -42,14 +42,12 @@ class Motor(object):
     def abord(self, type, value, tb):
         GPIO.cleanup(self.PINS)
 
-    def movesteps(self, steps):
+    def movesteps(self, a):
         #steps = value - self.steps
-        self.move(steps)
+        self.move(a)
 
     def move(self, steps):
-        
-        if steps == 0:
-            return '-0-'
+
         
         rotation = steps//abs(steps)
         for i in range(0, steps, rotation):
@@ -73,40 +71,36 @@ class Motor(object):
 
 
         
-class COMMANDER(Motor):
+class COMMANDER():
     
     def __init__(self,name,pins):
-        Motor.__init__(self,pins)
+        self.Motor=Motor(pins)
         self.name=name
         self.HOME=False
         self.SENSORPIN=0
         self.POS=0
         self.STEP=0
-
     def setPins(self,pins):
         self.Motor.pins=pins
-    
     def SSP(self,s):
         self.SENSORPIN=s
-        
     def setHOME(self):
         self.HOME=True
-        
     def definstep(self,step):
-		Motor.movesteps(step)
-		self.STEP=step
+        self.Motor.movesteps(step)
+        self.STEP=step
     def MoveOneStep(self,a): # -1 for backward
-        Motor.movesteps(self.STEP*a)
+        self.Motor.movesteps(self.STEP*a)
         self.POS+=a
         
     
 
-class CURSOR(Object):
+class CURSOR():
     
-    def __init__(self):
+    def __init__(self,pins1,pins2):
 		
-        self.XCommand=COMMANDER('X')
-        self.YCommand=COMMANDER('Y')
+        self.XCommand=COMMANDER('X',pins1)
+        self.YCommand=COMMANDER('Y',pins2)
         self.Position=Point(0,0)
         self.PullPin=15
         self.Home=False
@@ -131,13 +125,14 @@ class CURSOR(Object):
         self.YCommand.setHOME()
         self.Position=Point(0,0)
         self.Home=True
+        self.HomeKnow=True
 	
     def GetCodeData(self,DATA):
         self.CodeExec.decodeDATA(DATA)
 
     def GeneratePaths(self):
         self.Paths=[]
-        for i in range(0,self.CodeExec.checkpoints-1):
+        for i in range(0,len(self.CodeExec.checkpoints)-1):
             P=Path()
             P.setConfig(self.CodeExec.checkpoints[i],self.CodeExec.checkpoints[i+1],self.CodeExec.operativepaths[i])
             self.Paths+=[P]
@@ -170,12 +165,12 @@ class CURSOR(Object):
         a,b,c,d=derivate(self.Position,point)
         if a==0:
             while (self.Position.Y == point.Y )== False:
-                self.YCommand.MoveOneStep(c)
-                self.Position.AVY(c)
+                self.YCommand.MoveOneStep(d)
+                self.Position.AVY(d)
         if b==0:
             while (self.Position.X == point.X )== False:
-                self.XCommand.MoveOneStep(d)
-                self.Position.AVX(d)
+                self.XCommand.MoveOneStep(c)
+                self.Position.AVX(c)
 				
         self.Home=False
 
