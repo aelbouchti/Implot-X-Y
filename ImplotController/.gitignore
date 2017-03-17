@@ -1,0 +1,12 @@
+*.egg
+*.egg-info
+*.pyc
+.coverage
+.DS_Store
+.tox
+__pycache__
+build/
+coverage.xml
+dist
+htmlcov
+venv
